@@ -9,11 +9,6 @@ export class UserController {
   authService: any;
   constructor(private readonly userService: UserService) {}
 
-  @UseGuards(JwtAuthGuard)
-  @Get('protected')
-  getProtectedData() {
-    return 'This is protected data';
-  }
 
   @Post('register')
   create(@Body() createUserDto: CreateUserDto): Promise<User> {
@@ -28,17 +23,17 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @Get(':id')
+  @Get('id')
   findOne(@Param('id') id: number): Promise<User> {
     return this.userService.findOne(id);
   }
 
-  @Put(':id')
+  @Put('id')
   update(@Param('id') id: number, @Body() updateUserDto: Partial<User>): Promise<User> {
     return this.userService.update(id, updateUserDto);
   }
 
-  @Delete(':id')
+  @Delete('id')
   remove(@Param('id') id: number): Promise<void> {
     return this.userService.remove(id);
   }

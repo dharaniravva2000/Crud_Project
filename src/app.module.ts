@@ -5,6 +5,7 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module'; // Import UserModule
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [ 
@@ -23,7 +24,8 @@ import { UserModule } from './user/user.module'; // Import UserModule
         synchronize: true,
       }),
     }),
-    UserModule, // Include UserModule here
+    UserModule,
+   AuthModule, // Include UserModule here
   ],
   controllers: [AppController],
   providers: [AppService],
