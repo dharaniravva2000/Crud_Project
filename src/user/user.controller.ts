@@ -1,15 +1,27 @@
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './user.entity';
+import { CreateUserDto } from './create-user.dto';
+import { JwtAuthGuard } from 'src/auth/auth.guard';
 
 @Controller('users')
 export class UserController {
+  authService: any;
   constructor(private readonly userService: UserService) {}
 
-  @Post()
-  create(@Body() createUserDto: Partial<User>): Promise<User> {
+  @UseGuards(JwtAuthGuard)
+  @Get('protected')
+  getProtectedData() {
+    return 'This is protected data';
+  }
+
+  @Post('register')
+  create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.userService.create(createUserDto);
   }
+  
+
+
 
   @Get()
   findAll(): Promise<User[]> {
@@ -30,8 +42,4 @@ export class UserController {
   remove(@Param('id') id: number): Promise<void> {
     return this.userService.remove(id);
   }
-
-
 }
-
-

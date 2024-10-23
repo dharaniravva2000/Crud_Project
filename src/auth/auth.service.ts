@@ -1,22 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt'; // Import JwtService
-import { UserService } from '../user/user.service'; // Import UserService for user-related logic
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private readonly userService: UserService,
-    private readonly jwtService: JwtService, // Inject JwtService here
-  ) {}
-
-  async validateUser(email: string, password: string): Promise<any> {
-    // Logic for validating user credentials
+  validateUser(username: string, password: string) {
+    throw new Error('Method not implemented.');
   }
+  constructor(private jwtService: JwtService) {}
 
   async login(user: any) {
     const payload = { username: user.username, sub: user.userId };
     return {
-      access_token: this.jwtService.sign(payload), // Use JwtService to sign the token
+      access_token: this.jwtService.sign(payload),
     };
   }
 }
