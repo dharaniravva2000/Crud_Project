@@ -93,8 +93,70 @@ DB_PORT=5432
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
 DB_NAME=your_database
+JWT_SECRET=your_jwt_secret
+JWT_EXPIRATION=3600s
 
 ```
+
+## API Documentation
+
+Endpoints
+Create an new user
+- Endpoint: POST /users/register
+- Request Body: 
+
+```json
+{
+  "username": "Name",
+  "email": "emailaddress",
+  "password": "userpassword"
+}
+```
+
+- Response:
+  - 201 Created: Returns the created item.
+  - 400 Bad Request: Validation errors.
+
+Get All users
+- Endpoint: GET /users
+- Response:
+ - 200 OK: Returns an array of users.
+
+Get an user by ID
+- Endpoint: GET /users/:id
+- Response:
+ - 200 OK: Returns the item.
+ - 404 Not Found: Item not found.
+
+Update an user
+- Endpoint: PUT /users/:id
+- Request Body:
+```json
+{
+  "username": "Name",
+  "email": "emailaddress",
+  "password": "userpassword"
+}
+```
+- Response:
+ - 200 OK: Returns the updated user.
+ - 404 Not Found: Item not found.
+
+Delete an Item
+- Endpoint: DELETE /items/:id
+- Response:
+ - 204 No Content: user deleted successfully.
+ - 404 Not Found: user not found.
+
+## Error Handling
+- All endpoints handle common errors and return appropriate HTTP status codes.
+
+## Contributing
+- Fork the repository.
+- Create a new branch: git checkout -b feature/YourFeature.
+- Commit your changes: git commit -m 'Add your feature'.
+- Push to the branch: git push origin feature/YourFeature.
+
 
 ## Support
 
