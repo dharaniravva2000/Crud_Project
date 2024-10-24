@@ -28,12 +28,12 @@ export class UserController {
     return this.userService.findOne(id);
   }
 
-  @Put('id')
+  @Put(':id')
   update(@Param('id') id: number, @Body() updateUserDto: Partial<User>): Promise<User> {
     return this.userService.update(id, updateUserDto);
   }
 
-  @Delete('id')
+  @Delete(':id')
   remove(@Param('id') id: number): Promise<void> {
     return this.userService.remove(id);
   }
