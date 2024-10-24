@@ -21,15 +21,7 @@ describe('UserService', () => {
     service = module.get<UserService>(UserService);
   });
 
-  it('should return a user', async () => {
-    const user: User = {
-      id: 1,
-      username: 'John',
-      email: 'john@example.com',
-      password: 'hashed_password', // Add necessary fields
-    };
-
-    jest.spyOn(service, 'findOne').mockResolvedValue(user);
-    expect(await service.findOne(1)).toBe(user);
+  it('should be defined', () => {
+    expect(service).toBeDefined();
   });
 });

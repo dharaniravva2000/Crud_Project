@@ -1,40 +1,24 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserController } from '../src/user/user.controller'; // Adjust the import path accordingly
-import { UserService } from '../src/user/user.service'; // Adjust the import path accordingly
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { User } from '../src/user/user.entity';
- // Adjust the import path accordingly
-import { Repository } from 'typeorm';
+import { INestApplication } from '@nestjs/common';
+import * as request from 'supertest';
+import { AppModule } from './../src/app.module';
 
-describe('UserController', () => {
-  let userController: UserController;
-  let userService: UserService;
-  let mockUserRepository: Repository<User>;
+describe('AppController (e2e)', () => {
+  let app: INestApplication;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [UserController],
-      providers: [
-        UserService,
-        {
-          provide: getRepositoryToken(User), // Provide the User repository token
-          useClass: Repository, // Use the actual TypeORM Repository or a mocked version
-        },
-      ],
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [AppModule],
     }).compile();
 
-    userController = module.get<UserController>(UserController);
-    userService = module.get<UserService>(UserService);
-    mockUserRepository = module.get<Repository<User>>(getRepositoryToken(User));
+    app = moduleFixture.createNestApplication();
+    await app.init();
   });
 
-  afterEach(() => {
-    jest.clearAllMocks(); // Clear any mocked calls to ensure test isolation
+  it('/ (GET)', () => {
+    return request(app.getHttpServer())
+      .get('/')
+      .expect(200)
+      .expect('Hello World!');
   });
-
-  it('should be defined', () => {
-    expect(userController).toBeDefined();
-  });
-
-  // Add more tests for your controller methods
 });
